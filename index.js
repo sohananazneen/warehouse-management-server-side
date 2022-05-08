@@ -17,6 +17,8 @@ async function run() {
     try {
         await client.connect();
         const inventoryCollection = client.db('halalGrocery').collection('inventory');
+        const restockCollection = client.db('halalGrocery').collection('restock');
+
 
         // Inventory API
         app.get('/inventory', async (req, res) => {
@@ -48,6 +50,15 @@ async function run() {
             const result = await inventoryCollection.deleteOne(query);
             res.send(result);
         });
+
+        //My Items API
+        app.get('/restock', async (req, res) => {
+            const email = req.query.email;
+            const query = { email: email };
+            const cursor = restockCollection.find(query);
+            const restocks = await cursor.toArray();
+            res.send(restocks);
+        })
 
         // Restock 
         app.post('/restock', async (req, res) => {
