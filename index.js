@@ -48,6 +48,13 @@ async function run() {
             const result = await inventoryCollection.deleteOne(query);
             res.send(result);
         });
+
+        // Restock 
+        app.post('/restock', async (req, res) => {
+            const restock = req.body;
+            const result = await restockCollection.insertOne(restock);
+            res.send(result);
+        })
     }
     finally {
 
