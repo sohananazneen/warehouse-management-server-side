@@ -97,6 +97,25 @@ async function run() {
             const result = await restockCollection.insertOne(restock);
             res.send(result);
         })
+
+        // Delivered
+        app.put('/inventory/:id', async (req, res) => {
+            const id = req.params.id;
+            const data = req.body.update;
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: {
+                    ...data,
+                },
+            };
+            const result = await inventoryCollection.updateOne(
+                filter,
+                updateDoc,
+                options
+            );
+            res.send(result);
+        });
     }
     finally {
 
