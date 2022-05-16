@@ -98,7 +98,7 @@ async function run() {
             res.send(result);
         })
 
-        // Delivered
+        // Delivered API
         app.put('/inventory/:id', async (req, res) => {
             const id = req.params.id;
             const data = req.body.update;
